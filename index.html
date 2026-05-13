@@ -7,133 +7,317 @@
 <title>Present From Kaden 2026</title>
 
 <style>
-    *{
-        margin:0;
-        padding:0;
-        box-sizing:border-box;
-    }
 
-    body{
-        width:100vw;
-        height:100vh;
-        overflow:hidden;
-        background:black;
-        display:flex;
-        justify-content:center;
-        align-items:center;
-        font-family:sans-serif;
-    }
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
 
-    .container{
-        position:relative;
-        width:100%;
-        height:100%;
-        display:flex;
-        justify-content:center;
-        align-items:center;
-        overflow:hidden;
-    }
+body{
+    width:100vw;
+    height:100vh;
+    overflow:hidden;
+    background:black;
 
-    img{
-        width:100%;
-        height:100%;
-        object-fit:cover;
+    display:flex;
+    justify-content:center;
+    align-items:center;
 
-        /* 初期状態 */
-        opacity:0;
-        transform:scale(0.05);
-        filter:
-            brightness(0)
-            blur(20px);
+    font-family:sans-serif;
+}
 
-        animation:intro 6s ease-out forwards;
-    }
+.container{
+    position:relative;
 
-    /* 暗転→浮かび上がる映画予告風 */
-    @keyframes intro{
+    width:100%;
+    height:100%;
 
-        0%{
-            opacity:0;
-            transform:scale(0.02);
-            filter:
-                brightness(0)
-                blur(30px);
-        }
+    display:flex;
+    justify-content:center;
+    align-items:center;
 
-        20%{
-            opacity:0.3;
-        }
+    overflow:hidden;
+}
 
-        45%{
-            opacity:0.7;
-            filter:
-                brightness(0.4)
-                blur(10px);
-        }
+/* =========================
+   背景画像
+========================= */
 
-        70%{
-            opacity:1;
-            transform:scale(1.03);
+.base{
+    position:absolute;
+    inset:0;
 
-            filter:
-                brightness(1.2)
-                blur(0px);
-        }
+    width:100%;
+    height:100%;
 
-        100%{
-            opacity:1;
-            transform:scale(1);
+    object-fit:contain;
 
-            filter:
-                brightness(1)
-                blur(0px);
-        }
-    }
+    z-index:1;
 
-    /* 微細なシネマ風ノイズ */
-    .grain{
-        position:absolute;
-        inset:0;
-        pointer-events:none;
-        opacity:0.08;
+    /* 初期状態 */
+    opacity:0;
 
-        background-image:
-        repeating-radial-gradient(
-            circle at center,
-            rgba(255,255,255,0.2) 0px,
-            rgba(255,255,255,0.05) 1px,
-            transparent 2px
+    transform:scale(0.02);
+
+    filter:
+        brightness(0)
+        blur(30px);
+
+    animation:
+        intro 6s ease-out forwards,
+        breathing 8s ease-in-out 6s infinite;
+}
+
+/* =========================
+   キラキラ画像
+========================= */
+
+.sparkle{
+    position:absolute;
+    inset:0;
+
+    width:100%;
+    height:100%;
+
+    object-fit:contain;
+
+    pointer-events:none;
+
+    z-index:3;
+}
+
+/* b.png */
+.sparkle1{
+    animation:
+        sparkleA 2s steps(10) infinite;
+}
+
+/* c.png */
+.sparkle2{
+    animation:
+        sparkleB 2s steps(10) infinite;
+}
+
+/* =========================
+   レンズフレア
+========================= */
+
+.flare{
+    position:absolute;
+
+    width:120vmax;
+    height:120vmax;
+
+    border-radius:50%;
+
+    pointer-events:none;
+
+    z-index:4;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(255,255,255,0.25) 0%,
+            rgba(255,255,255,0.12) 10%,
+            rgba(255,255,255,0.05) 20%,
+            rgba(255,255,255,0) 60%
         );
 
-        animation:grainMove 0.3s infinite;
+    mix-blend-mode:screen;
+
+    animation:
+        flareMove 10s ease-in-out infinite,
+        flarePulse 4s ease-in-out infinite;
+}
+
+/* =========================
+   フィルムノイズ
+========================= */
+
+.grain{
+    position:absolute;
+    inset:0;
+
+    pointer-events:none;
+
+    z-index:10;
+
+    opacity:0.08;
+
+    background-image:
+    repeating-radial-gradient(
+        circle at center,
+        rgba(255,255,255,0.2) 0px,
+        rgba(255,255,255,0.05) 1px,
+        transparent 2px
+    );
+
+    animation:grainMove 0.3s infinite;
+}
+
+/* =========================
+   背景出現演出
+========================= */
+
+@keyframes intro{
+
+    0%{
+        opacity:0;
+
+        transform:scale(0.02);
+
+        filter:
+            brightness(0)
+            blur(30px);
     }
 
-    @keyframes grainMove{
-        0%{ transform:translate(0,0); }
-        25%{ transform:translate(-1px,1px); }
-        50%{ transform:translate(1px,-1px); }
-        75%{ transform:translate(1px,1px); }
-        100%{ transform:translate(0,0); }
+    20%{
+        opacity:0.3;
     }
 
-    /* ゆっくり呼吸するようなズーム */
-    .slowZoom{
-        animation:
-            intro 6s ease-out forwards,
-            breathing 8s ease-in-out 6s infinite;
+    45%{
+        opacity:0.7;
+
+        filter:
+            brightness(0.4)
+            blur(10px);
     }
 
-    @keyframes breathing{
-        0%{
-            transform:scale(1);
-        }
-        50%{
-            transform:scale(1.02);
-        }
-        100%{
-            transform:scale(1);
-        }
+    70%{
+        opacity:1;
+
+        transform:scale(1.03);
+
+        filter:
+            brightness(1.2)
+            blur(0px);
     }
+
+    100%{
+        opacity:1;
+
+        transform:scale(1);
+
+        filter:
+            brightness(1)
+            blur(0px);
+    }
+}
+
+/* =========================
+   呼吸ズーム
+========================= */
+
+@keyframes breathing{
+
+    0%{
+        transform:scale(1);
+    }
+
+    50%{
+        transform:scale(1.02);
+    }
+
+    100%{
+        transform:scale(1);
+    }
+}
+
+/* =========================
+   b.png
+========================= */
+
+@keyframes sparkleA{
+
+    0%   { opacity:0;   }
+    10%  { opacity:0.1; }
+    20%  { opacity:0.2; }
+    30%  { opacity:0.3; }
+    40%  { opacity:0.4; }
+    50%  { opacity:0.5; }
+    60%  { opacity:0.6; }
+    70%  { opacity:0.7; }
+    80%  { opacity:0.8; }
+    90%  { opacity:0.9; }
+    100% { opacity:1;   }
+}
+
+/* =========================
+   c.png
+========================= */
+
+@keyframes sparkleB{
+
+    0%   { opacity:1;   }
+    10%  { opacity:0.9; }
+    20%  { opacity:0.8; }
+    30%  { opacity:0.7; }
+    40%  { opacity:0.6; }
+    50%  { opacity:0.5; }
+    60%  { opacity:0.4; }
+    70%  { opacity:0.3; }
+    80%  { opacity:0.2; }
+    90%  { opacity:0.1; }
+    100% { opacity:0;   }
+}
+
+/* =========================
+   レンズフレア移動
+========================= */
+
+@keyframes flareMove{
+
+    0%{
+        transform:
+            translate(-20%, -10%)
+            scale(1);
+    }
+
+    50%{
+        transform:
+            translate(10%, 10%)
+            scale(1.1);
+    }
+
+    100%{
+        transform:
+            translate(-20%, -10%)
+            scale(1);
+    }
+}
+
+/* =========================
+   レンズフレア明滅
+========================= */
+
+@keyframes flarePulse{
+
+    0%{
+        opacity:0.2;
+    }
+
+    50%{
+        opacity:0.45;
+    }
+
+    100%{
+        opacity:0.2;
+    }
+}
+
+/* =========================
+   ノイズ揺れ
+========================= */
+
+@keyframes grainMove{
+
+    0%{ transform:translate(0,0); }
+    25%{ transform:translate(-1px,1px); }
+    50%{ transform:translate(1px,-1px); }
+    75%{ transform:translate(1px,1px); }
+    100%{ transform:translate(0,0); }
+}
 
 </style>
 </head>
@@ -142,10 +326,19 @@
 
 <div class="container">
 
-    <!-- root に置いた画像 -->
-    <img src="a.png" alt="準備中" class="slowZoom">
+    <!-- 背景 -->
+    <img src="a.png" class="base">
 
-    <!-- シネマ風ノイズ -->
+    <!-- キラキラ -->
+    <img src="b.png" class="sparkle sparkle1">
+
+    <!-- キラキラ -->
+    <img src="c.png" class="sparkle sparkle2">
+
+    <!-- レンズフレア -->
+    <div class="flare"></div>
+
+    <!-- フィルムノイズ -->
     <div class="grain"></div>
 
 </div>
