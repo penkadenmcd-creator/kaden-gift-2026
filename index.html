@@ -1,70 +1,154 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Present From Kaden 2026</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <style>
-        body {
-            margin: 0;
-            background: linear-gradient(to bottom, #1a1a2e, #16213e);
-            color: white;
-            font-family: sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            text-align: center;
-            overflow: hidden;
+<title>Present From Kaden 2026</title>
+
+<style>
+    *{
+        margin:0;
+        padding:0;
+        box-sizing:border-box;
+    }
+
+    body{
+        width:100vw;
+        height:100vh;
+        overflow:hidden;
+        background:black;
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        font-family:sans-serif;
+    }
+
+    .container{
+        position:relative;
+        width:100%;
+        height:100%;
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        overflow:hidden;
+    }
+
+    img{
+        width:100%;
+        height:100%;
+        object-fit:cover;
+
+        /* 初期状態 */
+        opacity:0;
+        transform:scale(0.05);
+        filter:
+            brightness(0)
+            blur(20px);
+
+        animation:intro 6s ease-out forwards;
+    }
+
+    /* 暗転→浮かび上がる映画予告風 */
+    @keyframes intro{
+
+        0%{
+            opacity:0;
+            transform:scale(0.02);
+            filter:
+                brightness(0)
+                blur(30px);
         }
 
-        .container {
-            padding: 40px;
-            border: 2px solid rgba(255,255,255,0.2);
-            border-radius: 16px;
-            background: rgba(255,255,255,0.05);
-            backdrop-filter: blur(4px);
+        20%{
+            opacity:0.3;
         }
 
-        h1 {
-            font-size: 3em;
-            margin-bottom: 0.2em;
+        45%{
+            opacity:0.7;
+            filter:
+                brightness(0.4)
+                blur(10px);
         }
 
-        p {
-            font-size: 1.2em;
-            opacity: 0.9;
+        70%{
+            opacity:1;
+            transform:scale(1.03);
+
+            filter:
+                brightness(1.2)
+                blur(0px);
         }
 
-        .heart {
-            font-size: 2em;
-            animation: float 2s ease-in-out infinite;
-            display: inline-block;
-            margin-top: 20px;
-        }
+        100%{
+            opacity:1;
+            transform:scale(1);
 
-        @keyframes float {
-            0%   { transform: translateY(0px); }
-            50%  { transform: translateY(-10px); }
-            100% { transform: translateY(0px); }
+            filter:
+                brightness(1)
+                blur(0px);
         }
-    </style>
+    }
+
+    /* 微細なシネマ風ノイズ */
+    .grain{
+        position:absolute;
+        inset:0;
+        pointer-events:none;
+        opacity:0.08;
+
+        background-image:
+        repeating-radial-gradient(
+            circle at center,
+            rgba(255,255,255,0.2) 0px,
+            rgba(255,255,255,0.05) 1px,
+            transparent 2px
+        );
+
+        animation:grainMove 0.3s infinite;
+    }
+
+    @keyframes grainMove{
+        0%{ transform:translate(0,0); }
+        25%{ transform:translate(-1px,1px); }
+        50%{ transform:translate(1px,-1px); }
+        75%{ transform:translate(1px,1px); }
+        100%{ transform:translate(0,0); }
+    }
+
+    /* ゆっくり呼吸するようなズーム */
+    .slowZoom{
+        animation:
+            intro 6s ease-out forwards,
+            breathing 8s ease-in-out 6s infinite;
+    }
+
+    @keyframes breathing{
+        0%{
+            transform:scale(1);
+        }
+        50%{
+            transform:scale(1.02);
+        }
+        100%{
+            transform:scale(1);
+        }
+    }
+
+</style>
 </head>
 
 <body>
-    <div class="container">
-        <h1>🎁 Present From Kaden 2026</h1>
 
-        <p>
-            GitHub Pages テスト成功！
-        </p>
+<div class="container">
 
-        <p>
-            Happy Birthday!
-        </p>
+    <!-- root に置いた画像 -->
+    <img src="a.png" alt="準備中" class="slowZoom">
 
-        <div class="heart">🐾</div>
-    </div>
+    <!-- シネマ風ノイズ -->
+    <div class="grain"></div>
+
+</div>
+
 </body>
 </html>
