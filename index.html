@@ -387,7 +387,7 @@ function updateCountdown() {
 
     // もしすでに目標時刻を過ぎていた場合
     if (diff <= 0) {
-        element.innerHTML = "みねこさんお誕生日おめでとうございます！";
+        element.innerHTML = "みねこさん<br>お誕生日おめでとうございます！";
         return;
     }
 
@@ -396,8 +396,8 @@ function updateCountdown() {
     const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
     const seconds = Math.floor((diff % (1000 * 60)) / 1000);
 
-    // 指定された形式で文字を合成
-    element.innerHTML = `みねこさん誕生日まで${hours}時${minutes}分${seconds}秒`;
+    // 「みねこさん誕生日まで」の後ろに <br> を入れて改行する
+    element.innerHTML = `みねこさん誕生日まで<br>${hours}時${minutes}分${seconds}秒`;
 }
 
 // 起動時に一回動かし、その後は1秒ごとにリアルタイム更新
