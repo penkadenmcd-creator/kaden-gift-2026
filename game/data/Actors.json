@@ -1,0 +1,5 @@
+[
+null,
+{"id":1,"battlerName":"mine_mini","characterIndex":0,"characterName":"$neko2","classId":1,"equips":[1,1,2,3,0],"faceIndex":1,"faceName":"Nature","traits":[],"initialLevel":1,"maxLevel":99,"name":"みねこねこ","nickname":"","note":"","profile":""},
+{"id":2,"battlerName":"","characterIndex":0,"characterName":"JAPAN_歩行","classId":1,"equips":[0,0,0,0,0],"faceIndex":0,"faceName":"","traits":[],"initialLevel":1,"maxLevel":99,"name":"みねこへんしん","nickname":"","note":"","profile":""}
+]
