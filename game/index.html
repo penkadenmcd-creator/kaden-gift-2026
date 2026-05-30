@@ -32,7 +32,7 @@
             justify-content: center;
             align-items: center;
             padding: 20px;
-            cursor: pointer; /* 画面をクリックできることを伝える */
+            cursor: pointer;
         }
 
         /* 背景のグラデーション */
@@ -181,7 +181,7 @@
         <div class="grain"></div>
 
         <div class="content-area">
-            <img src="edited-image.jpg" class="celebration-graphic" alt="Happy Birthday">
+            <img src="image_223a58.jpg" class="celebration-graphic" alt="Happy Birthday">
 
             <div class="text-group">
                 <h1 class="slide-title">2026.06.01</h1>
@@ -203,26 +203,34 @@
     let audioStarted = false;
 
     function playBGM() {
-        if (audioStarted) return; // すでに鳴っている場合は何もしない
+        // すでに鳴っている場合は何もしない
+        if (audioStarted) return; 
 
         const audio = document.getElementById("bgm");
         
-        // 最初は音量を0（無音）にして再生開始
+        // ブラウザのブロックを避けるため、このクリックイベントの中で初めて音量設定と再生を行う
         audio.volume = 0;
-        audio.play().then(() => {
-            audioStarted = true;
-            
-            // 1.5秒かけて音量を 0 から 0.3 (30%) までふわっと上げるフェードイン処理
-            let fadeInterval = setInterval(() => {
-                if (audio.volume < 0.3) {
-                    audio.volume = Math.min(audio.volume + 0.05, 0.3);
-                } else {
-                    clearInterval(fadeInterval);
-                }
-            }, 250);
-        }).catch(error => {
-            console.log("ユーザーの操作待ちです:", error);
-        });
+        
+        // 再生を実行
+        var playPromise = audio.play();
+
+        if (playPromise !== undefined) {
+            playPromise.then(() => {
+                audioStarted = true;
+                
+                // 1.5秒かけて音量を 0 から 0.3 (30%) まで滑らかに上げるフェードイン
+                let fadeInterval = setInterval(() => {
+                    if (audio.volume < 0.3) {
+                        audio.volume = Math.min(audio.volume + 0.05, 0.3);
+                    } else {
+                        clearInterval(fadeInterval);
+                    }
+                }, 250);
+            }).catch(error => {
+                // 万が一のブラウザエラーをコンソールに逃がす
+                console.log("Audio play blocked: ", error);
+            });
+        }
     }
     </script>
 
