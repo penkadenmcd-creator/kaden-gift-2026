@@ -6,8 +6,7 @@
 
 <title>Present From Kaden 2026</title>
 
-    <!-- これを追加 -->
-<link rel="stylesheet" href="fonts/gamefont.css">
+    <link rel="stylesheet" href="fonts/gamefont.css">
     
 <style>
 
@@ -27,7 +26,8 @@ body{
     justify-content:center;
     align-items:center;
 
-    font-family:sans-serif;
+    /* ツクールのゲームフォントを優先適用、なければsans-serif */
+    font-family: 'GameFont', sans-serif;
 }
 
 .container{
@@ -41,6 +41,39 @@ body{
     align-items:center;
 
     overflow:hidden;
+}
+
+/* =========================
+   カウントダウンテキスト
+========================= */
+.countdown-text {
+    position: absolute;
+    width: 80%; /* 画面の約3分の2以上の横幅を確保 */
+    text-align: center;
+    color: #ffffff;
+    
+    /* 映画のタイトルのように綺麗に見せるための白い光彩(シャドウ) */
+    text-shadow: 
+        0 0 10px rgba(255, 255, 255, 0.8),
+        0 0 20px rgba(255, 255, 255, 0.4),
+        0 0 30px rgba(255, 255, 255, 0.2);
+
+    /* 画面幅に合わせて文字サイズを自動調整（横幅の6%の大きさ） */
+    font-size: 6vw; 
+    font-weight: bold;
+    letter-spacing: 0.05em;
+
+    /* 背景画像(1)やキラキラ(3)より手前、ノイズ(10)より奥 */
+    z-index: 5; 
+    
+    /* 最初は文字を滑らかに浮かび上がらせる(フェードイン) */
+    opacity: 0;
+    animation: textFadeIn 3s ease-out 1s forwards;
+}
+
+@keyframes textFadeIn {
+    0% { opacity: 0; transform: scale(0.95); filter: blur(10px); }
+    100% { opacity: 1; transform: scale(1); filter: blur(0px); }
 }
 
 /* =========================
@@ -329,22 +362,48 @@ body{
 
 <div class="container">
 
-    <!-- 背景 -->
+    <div id="countdown" class="countdown-text"></div>
+
     <img src="a.png" class="base">
 
-    <!-- キラキラ -->
     <img src="b.png" class="sparkle sparkle1">
 
-    <!-- キラキラ -->
     <img src="c.png" class="sparkle sparkle2">
 
-    <!-- レンズフレア -->
     <div class="flare"></div>
 
-    <!-- フィルムノイズ -->
     <div class="grain"></div>
 
 </div>
+
+<script>
+function updateCountdown() {
+    // 目標日時：2026年6月1日 00:00:00 (日本時間)
+    const targetDate = new Date("2026-06-01T00:00:00+09:00").getTime();
+    const now = new Date().getTime();
+    const diff = targetDate - now;
+
+    const element = document.getElementById("countdown");
+
+    // もしすでに目標時刻を過ぎていた場合
+    if (diff <= 0) {
+        element.innerHTML = "みねこさんお誕生日おめでとうございます！";
+        return;
+    }
+
+    // 残り時間を時・分・秒に計算
+    const hours = Math.floor(diff / (1000 * 60 * 60));
+    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+    // 指定された形式で文字を合成
+    element.innerHTML = `みねこさん誕生日まで${hours}時${minutes}分${seconds}秒`;
+}
+
+// 起動時に一回動かし、その後は1秒ごとにリアルタイム更新
+updateCountdown();
+setInterval(updateCountdown, 1000);
+</script>
 
 </body>
 </html>
