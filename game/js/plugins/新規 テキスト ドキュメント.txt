@@ -1,9 +1,0 @@
-AudioManager.preloadSe = function(name) {
-    const se = {
-        name: name,
-        volume: 90,
-        pitch: 100,
-        pan: 0
-    };
-    AudioManager.loadStaticSe(se);
-};
